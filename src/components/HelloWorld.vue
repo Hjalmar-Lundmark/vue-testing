@@ -25,9 +25,13 @@ watch(
         console.log(err)
       });
 
-    console.log(weatherData.value)
+    console.log(weatherData._rawValue)
   }
 )
+
+function getWeatherIcon(weather) {
+  return 'http://openweathermap.org/img/w/' + weather + '.png'
+}
 
 </script>
 
@@ -58,68 +62,76 @@ watch(
   <div class="weather" v-if="weatherData">
     <div className='gridCard'>
       <h3>City:</h3>
-      <h2>{{ weatherData.value.name }}</h2>
+      <h2>{{ weatherData.name }}</h2>
     </div>
     <div className='gridCard'>
       <h3>Temperature:</h3>
-      <h2>{{ (weatherData.value.main.temp - 273.15).toFixed(1) + ' °C' }}</h2>
+      <h2>{{ (weatherData.main.temp - 273.15).toFixed(1) + ' °C' }}</h2>
     </div>
-    <!-- <div className='gridCard'>
+    <div className='gridCard'>
       <h3>Feels like:</h3>
-      <h2>{{ (weatherData.value.main.feels_like - 273.15).toFixed(1) + ' °C' }}</h2>
+      <h2>{{ (weatherData.main.feels_like - 273.15).toFixed(1) + ' °C' }}</h2>
     </div>
-    {{ weatherData.value.rain ?
-      (
-        <div className= 'gridCard' >
-          <h3>Rainfall : </h3>
-          < h2 > {{
-            weatherData.value.rain["1h"] }} mm/h</h2>
-          </div>
-          ) : <></>}}
-          {{ weatherData.value.snow ?
-            (
-              <div className= 'gridCard' >
-                <h3>Snowfall : </h3>
-                < h2 > {{
-                  weatherData.value.snow["1h"] }} mm/h</h2>
-                </div>
-                ) : <></>}} 
-                <div className='gridCard'>
-                  <h3>Clouds:</h3>
-                  <h2>Sky coverage: {{ weatherData.value.clouds.all + '%' }}</h2>
-                </div>
-                <div className='gridCard'>
-                  <h3>Pressure:</h3>
-                  <h2>{{ weatherData.value.main.pressure }} hPa</h2>
-                </div>
-                <div className='gridCard'>
-    <h3>Wind:</h3>
-    <h2>
-      {{ getWind(weatherData.value) }} ({{ weatherData.value.wind.speed + ' m/s' }})
-    </h2>
-  </div>
-  <div className='gridCard'>
-    <h3>Wind direction:</h3>
-    <h2>
-      {{ getWindDir(weatherData.value) }} ({{ weatherData.value.wind.deg + '°' }})
-    </h2>
-  </div>
-  <div className='gridCard'>
-    <h3>Humidity:</h3>
-    <h2>{{ weatherData.value.main.humidity + '%' }}</h2>
-  </div>
-  <div className='gridCard'>
-    <h3>Visibility:</h3>
-    <h2>{{ weatherData.value.visibility }} meter</h2>
-  </div>
-  <div className='gridCard'>
-    <h3>Sunrise:</h3>
-    <h2>{{ new Date(weatherData.value.sys.sunrise * 1000).toLocaleTimeString() }}</h2>
-  </div>
-  <div className='gridCard'>
-    <h3>Sunset:</h3>
-    <h2>{{ new Date(weatherData.value.sys.sunset * 1000).toLocaleTimeString() }}</h2>
-  </div> -->
+    <div className='gridCard'>
+      <h3>Humidity:</h3>
+      <h2>{{ weatherData.main.humidity + '%' }}</h2>
+    </div>
+    <div className='gridCard'>
+      <h3>Pressure:</h3>
+      <h2>{{ weatherData.main.pressure + ' hPa' }}</h2>
+    </div>
+    <div className='gridCard'>
+      <h3>Wind speed:</h3>
+      <h2>{{ weatherData.wind.speed + ' m/s' }}</h2>
+    </div>
+    <div className='gridCard'>
+      <h3>Wind direction:</h3>
+      <h2>{{ weatherData.wind.deg + ' °' }}</h2>
+    </div>
+    <div className='gridCard'>
+      <h3>Cloudiness:</h3>
+      <h2>{{ weatherData.clouds.all + '%' }}</h2>
+    </div>
+    <div className='gridCard'>
+      <h3>Visibility:</h3>
+      <h2>{{ weatherData.visibility + ' m' }}</h2>
+    </div>
+    <div className='gridCard'>
+      <h3>Weather:</h3>
+      <h2>{{ weatherData.weather[0].main }}</h2>
+    </div>
+    <!-- <div className='gridCard' v-if="weatherData.weather[0].icon">
+      <h3>Weather icon:</h3>
+      <img src={{ getWeatherIcon(weatherData.weather[0].icon) }} alt={{weatherData.weather[0].description}} width={{100}}
+        height={{100}} />
+    </div> -->
+    <div className='gridCard'>
+      <h3>Base:</h3>
+      <h2>{{ weatherData.base }}</h2>
+    </div>
+    <div className='gridCard'>
+      <h3>Timezone:</h3>
+      <h2>{{ weatherData.timezone + ' s' }}</h2>
+    </div>
+    <div className='gridCard'>
+      <h3>Country:</h3>
+      <h2>{{ weatherData.sys.country }}</h2>
+    </div>
+    <div className='gridCard'>
+      <h3>Sunrise:</h3>
+      <h2>{{ new Date(weatherData.sys.sunrise * 1000).toLocaleTimeString() }}</h2>
+    </div>
+    <div className='gridCard'>
+      <h3>Sunset:</h3>
+      <h2>{{ new Date(weatherData.sys.sunset * 1000).toLocaleTimeString() }}</h2>
+    </div>
+    <div className='gridCard'>
+      <h3>Coordinates:</h3>
+      <h2>{{ weatherData.coord.lat + ', ' + weatherData.coord.lon }}</h2>
+    </div>
+
+
+
   </div>
 </template>
 
